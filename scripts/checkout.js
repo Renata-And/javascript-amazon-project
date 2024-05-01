@@ -154,12 +154,18 @@ document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
       `.js-quantity-input-${productId}`
     );
     const newQuantity = Number(quantityInput.value);
-    updateQuantity(productId, newQuantity);
 
+    if (newQuantity <= 0 || newQuantity > 1000) {
+      alert('Enter a value between 1 and 1000');
+      return;
+    }
+
+    updateQuantity(productId, newQuantity);
     const quantityLabel = document.querySelector(
       `.js-quantity-label-${productId}`
     );
     quantityLabel.innerHTML = newQuantity;
+
     updateCartQuantity();
     checkoutQuantityElement.innerHTML = `${updateCartQuantity()} items`;
   });
