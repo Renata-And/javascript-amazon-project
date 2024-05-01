@@ -161,5 +161,6 @@ document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
     );
     quantityLabel.innerHTML = newQuantity;
     updateCartQuantity();
+    checkoutQuantityElement.innerHTML = `${updateCartQuantity()} items`;
   });
 });
