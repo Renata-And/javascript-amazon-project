@@ -16,4 +16,10 @@ describe('test suite: formatCurrency', () => {
   it('works with 0', () => {
     expect(formatCurrency(0)).toEqual('0.00');
   });
+
+  it('works witn negative number', () => {
+    expect(formatCurrency(-2000)).toEqual(
+      'Incorrect number, price should be greater than 0'
+    );
+  });
 });

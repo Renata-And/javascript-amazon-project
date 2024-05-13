@@ -30,6 +30,18 @@ export function getDeliveryOption(deliveryOptionId) {
   return deliveryOption;
 }
 
+export function validDeliveryOption(deliveryOptionId) {
+  let valid = false;
+
+  deliveryOptions.forEach((option) => {
+    if (deliveryOptionId === option.id) {
+      valid = true;
+    }
+  });
+
+  return valid;
+}
+
 export function calculateDeliveryDate(deliveryOption) {
   let remainingDays = deliveryOption.deliveryDays;
   let deliveryDate = dayjs();
