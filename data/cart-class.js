@@ -84,18 +84,22 @@ class Cart {
 
   updateQuantity(productId, newQuantity) {
     const matchingItem = this.getProductFromCart(productId);
-    matchingItem.quantity = newQuantity;
-    this.saveToStorage();
+    if (matchingItem) {
+      matchingItem.quantity = newQuantity;
+      this.saveToStorage();
+    }
   }
 
   updateDeliveryOption(productId, deliveryOptionId) {
     const matchingItem = this.getProductFromCart(productId);
-    matchingItem.deliveryOptionId = deliveryOptionId;
-    this.saveToStorage();
+    if (matchingItem) {
+      matchingItem.deliveryOptionId = deliveryOptionId;
+      this.saveToStorage();
+    }
   }
 }
 
-const cart = new Cart('cart-oop');
+export const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
 
 console.log(cart);

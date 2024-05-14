@@ -1,10 +1,10 @@
-import { createCartQuantity } from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 
 export function renderCheckoutHeader() {
   const checkoutHeaderHTML = `
     <div class="checkout-header-middle-section">
       Checkout (<a class="return-to-home-link" href="amazon.html">
-      ${createCartQuantity()} items
+      ${cart.createCartQuantity()} items
       </a>)
     </div>
   `;
