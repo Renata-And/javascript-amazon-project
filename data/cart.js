@@ -95,3 +95,15 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
     return;
   }
 }
+
+export function loadCart(callback) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    callback();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
