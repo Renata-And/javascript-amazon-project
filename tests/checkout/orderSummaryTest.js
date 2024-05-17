@@ -9,10 +9,8 @@ describe('test suite: renderOrderSummary', () => {
   const productName1 = 'Black and Gray Athletic Cotton Socks - 6 Pairs';
   const productName2 = 'Intermediate Size Basketball';
 
-  beforeAll((done) => {
-    loadProductsFetch().then(() => {
-      done();
-    });
+  beforeAll(async () => {
+    await loadProductsFetch();
   });
 
   beforeEach(() => {
@@ -24,22 +22,6 @@ describe('test suite: renderOrderSummary', () => {
       <div class="js-payment-summary"></div>
     `;
 
-    // spyOn(localStorage, 'getItem').and.callFake(() => {
-    //   return JSON.stringify([
-    //     {
-    //       productId: productId1,
-    //       quantity: 2,
-    //       deliveryOptionId: '1',
-    //     },
-    //     {
-    //       productId: productId2,
-    //       quantity: 1,
-    //       deliveryOptionId: '2',
-    //     },
-    //   ]);
-    // });
-
-    // loadFromStorage();
     cart.cartItems = [
       {
         productId: productId1,
