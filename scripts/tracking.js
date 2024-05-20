@@ -11,19 +11,36 @@ function renderOrderTracking() {
   const deliveryDate = dayjs(
     getProductFromOrder().estimatedDeliveryTime
   ).format('MMMM D');
+
+  const currenTime = dayjs();
+  const orderTime = dayjs(getOrder().orderTime);
+  const deliveryTime = dayjs(getProductFromOrder().estimatedDeliveryTime);
+  const progressPercent =
+    ((currenTime - orderTime) / (deliveryTime - orderTime)) * 100;
+
   let orderTrackingHtml = '';
+
+  function getOrder() {
+    let matchingOrder;
+    orders.forEach((order) => {
+      if (orderId === order.id) {
+        matchingOrder = order;
+      }
+    });
+    return matchingOrder;
+  }
 
   function getProductFromOrder() {
     let matchingProduct;
-    orders.forEach((order) => {
-      if (orderId === order.id) {
-        order.products.forEach((product) => {
-          if (productId === product.productId) {
-            matchingProduct = product;
-          }
-        });
-      }
-    });
+    let order = getOrder();
+
+    if (orderId === order.id) {
+      order.products.forEach((product) => {
+        if (productId === product.productId) {
+          matchingProduct = product;
+        }
+      });
+    }
     return matchingProduct;
   }
 
@@ -47,29 +64,29 @@ function renderOrderTracking() {
     <img class="product-image" src=${product.image}>
 
     <div class="progress-labels-container">
-      <div class="progress-label">
+      <div class="progress-label ${
+        progressPercent < 50 ? 'current-status' : ''
+      }">
         Preparing
       </div>
-      <div class="progress-label current-status">
+      <div class="progress-label ${
+        progressPercent >= 50 && progressPercent < 100 ? 'current status' : ''
+      }">
         Shipped
       </div>
-      <div class="progress-label">
+      <div class="progress-label ${
+        progressPercent >= 100 ? 'current-status' : ''
+      }">
         Delivered
       </div>
     </div>
 
     <div class="progress-bar-container">
-      <div class="progress-bar"></div>
+      <div class="progress-bar" style="width: ${progressPercent}%;"></div>
     </div>
   `;
 
   document.querySelector('.js-order-tracking').innerHTML = orderTrackingHtml;
-
-  let currenTime = new Date();
-  console.log(currenTime.getTime());
-
-  // const progressPercent =
-  //   ((currenTime - orderTime) / (deliveryTime - orderTime)) * 100;
 }
 
 async function loadPage() {

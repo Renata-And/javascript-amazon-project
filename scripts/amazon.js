@@ -1,14 +1,39 @@
 import { cart } from '../data/cart-class.js';
 import { products, loadProducts } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
 
 loadProducts(renderProductsGrid);
 
 function renderProductsGrid() {
-  let productsHTML = '';
   const cartQuantityElement = document.querySelector('.js-cart-quantity');
+  const url = new URL(window.location.href);
+  const searched = url.searchParams.get('search');
+  let filteredProduct = products;
+  let productsHTML = '';
 
-  products.forEach((product) => {
+  if (searched) {
+    filteredProduct = products.filter((product) => {
+      let matchingKeyword = false;
+
+      product.keywords.forEach((keyword) => {
+        if (keyword.toLowerCase().includes(searched.toLowerCase())) {
+          matchingKeyword = true;
+        }
+      });
+      return (
+        matchingKeyword ||
+        product.name.toLowerCase().includes(searched.toLowerCase())
+      );
+    });
+    if (filteredProduct.length === 0) {
+      const div = document.createElement('div');
+      const parent = document.querySelector('.js-main');
+      div.innerText = 'Ooops! Nothing found. Try looking for something else.';
+      div.classList.add('product-not-found');
+      parent.append(div);
+    }
+  }
+
+  filteredProduct.forEach((product) => {
     productsHTML += `
     <div class="product-container">
       <div class="product-image-container">
@@ -95,4 +120,19 @@ function renderProductsGrid() {
       addedMessageTimeoutId = timeoutId;
     });
   }
+
+  const searchBar = document.querySelector('.js-search-bar');
+  const searchBtn = document.querySelector('.js-search-button');
+
+  searchBtn.addEventListener('click', () => {
+    const searchValue = searchBar.value;
+    window.location.href = `amazon.html?search=${searchValue}`;
+  });
+
+  searchBar.addEventListener('keyup', (event) => {
+    const searchValue = searchBar.value;
+    if (event.key === 'Enter') {
+      window.location.href = `amazon.html?search=${searchValue}`;
+    }
+  });
 }

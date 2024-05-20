@@ -3,8 +3,10 @@ import { formatCurrency } from './utils/money.js';
 import { getProduct, loadProductsFetch } from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { cart } from '../data/cart-class.js';
+import { products } from '../data/products.js';
 
 function renderOrders() {
+  const cartQuantityElement = document.querySelector('.js-cart-quantity');
   let ordersHTML = '';
 
   orders.forEach((order) => {
@@ -84,6 +86,8 @@ function renderOrders() {
     button.addEventListener('click', () => {
       const { productId } = button.dataset;
       cart.addToCart(productId);
+      cart.saveToStorage();
+      cartQuantityElement.innerText = cart.createCartQuantity();
 
       button.innerHTML = 'Added';
       setTimeout(() => {
@@ -102,7 +106,7 @@ function renderOrders() {
     });
   });
 
-  console.log(orders);
+  cartQuantityElement.innerText = cart.createCartQuantity();
 }
 
 async function loadPage() {
