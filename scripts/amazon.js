@@ -126,13 +126,13 @@ function renderProductsGrid() {
 
   searchBtn.addEventListener('click', () => {
     const searchValue = searchBar.value;
-    window.location.href = `amazon.html?search=${searchValue}`;
+    window.location.href = `index.html?search=${searchValue}`;
   });
 
   searchBar.addEventListener('keyup', (event) => {
     const searchValue = searchBar.value;
     if (event.key === 'Enter') {
-      window.location.href = `amazon.html?search=${searchValue}`;
+      window.location.href = `index.html?search=${searchValue}`;
     }
   });
 }
