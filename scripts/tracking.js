@@ -1,5 +1,5 @@
 import { orders } from '../data/orders.js';
-import { getProduct, loadProductsFetch } from '../../data/products.js';
+import { getProduct, loadProductsFetch } from '../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 function renderOrderTracking() {
